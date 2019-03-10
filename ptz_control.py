@@ -11,6 +11,7 @@
 from onvif import ONVIFCamera
 from msvcrt import getch
 
+# Create class for moving PTZ Cam in ContiniousMode using NumPad bindings
 class my_ptz():
     def initialize(self, ip, port, username, password):
         global ptz
@@ -25,7 +26,8 @@ class my_ptz():
         ptz = mycam.create_ptz_service()
         print 'Creating PTZ service... Done.'
         self.define_requests(token)
-
+    
+    # Define necessary requests
     def define_requests(self, token):
         print 'Defining Requests types...'
         global req_move, req_stop, req_goto_home
@@ -118,6 +120,7 @@ class my_ptz():
         req_move.Velocity.Zoom._x = -speed
         ptz.ContinuousMove(req_move)
 
+# Initialize cam, and create an infinite loop to manage Cam actions
 cam = my_ptz()
 cam.initialize('192.168.11.23', 80, 'admin', 'Supervisor')
 while True:
